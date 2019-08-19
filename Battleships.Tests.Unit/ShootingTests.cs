@@ -84,7 +84,7 @@ namespace Tests
                 }
             };
 
-            var shot = game.Shoot(new Square(1, 2), true);
+            var shot = game.Shoot(new Square(1, 2), false);
 
             Assert.AreEqual(ShotResultEnum.Hit, shot.Result);
         }
@@ -103,7 +103,7 @@ namespace Tests
                 }
             };
 
-            var shot = game.Shoot(new Square(1, 2), true);
+            var shot = game.Shoot(new Square(1, 2), false);
 
             Assert.AreEqual(ShotResultEnum.Sink, shot.Result);
         }
@@ -148,7 +148,7 @@ namespace Tests
                 }
             };
 
-            game.Shoot(new Square(1, 2), true);
+            game.Shoot(new Square(1, 2), false);
 
             var sinkedShips = game.PlayerShips.Count(s => s.Destroyed);
 
