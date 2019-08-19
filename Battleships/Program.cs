@@ -6,7 +6,12 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var game = new Game();
+            var ui = new ConsoleInterface(game);
+
+            ui.Start();
+
+            Console.ReadKey();
         }
     }
 }
