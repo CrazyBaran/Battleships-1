@@ -125,14 +125,14 @@ namespace Battleships
         /// Shoots given target
         /// </summary>
         /// <param name="targetSquare">Target square</param>
-        /// <param name="player">Player flag: true - player; false - npc</param>
+        /// <param name="player">Is player shooting?</param>
         /// <returns></returns>
         public Shot Shoot(Square? targetSquare, bool player)
         {
             Ship[] targetShips;
             List<Shot> shotsCollection;
 
-            targetShips = player ? this.PlayerShips : this.NPCShips;
+            targetShips = player ? this.NPCShips : this.PlayerShips;
             shotsCollection = player ? this.PlayerShots : this.NPCShots;
 
             if (!targetSquare.HasValue)
