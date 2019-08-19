@@ -12,6 +12,7 @@ namespace Battleships
 
         public List<Shot> PlayerShots { get; set; }
         public List<Shot> NPCShots { get; set; }
+        public bool IsFinished { get; set; }
 
         public Game()
         {
