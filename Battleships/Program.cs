@@ -6,11 +6,20 @@ namespace Battleships
     {
         static void Main(string[] args)
         {
-            var game = new Game();
             var validator = new Validator();
-            var ui = new ConsoleInterface(game, validator);
 
-            ui.Start();
+            char input = '1';
+            while (input == '1')
+            {
+                var game = new Game();
+                var ui = new ConsoleInterface(game, validator);
+
+                ui.Start();
+
+                Console.WriteLine("\nPress 1 to play again or any other key to exit.");
+                input = Console.ReadKey().KeyChar;
+            }
+
         }
     }
 }
