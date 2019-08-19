@@ -6,5 +6,8 @@ namespace Battleships
 {
     public class Game
     {
+        public Ship[] PlayerShips { get; set; }
+        public Ship[] NPCShips { get; set; }
+
     }
 }
