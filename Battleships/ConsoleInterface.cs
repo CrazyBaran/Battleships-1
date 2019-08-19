@@ -66,6 +66,7 @@ namespace Battleships
             Console.WriteLine("\nGame Finished!");
             string finishMessage = _game.DidPlayerWin ? "Congratulations! You won!" : "Computer won! Good luck next time!";
             Console.WriteLine(finishMessage);
+            Console.WriteLine();
             Console.WriteLine($"Player hits:{_game.PlayerShots.Count(s => s.Result == ShotResultEnum.Hit)}");
             Console.WriteLine($"Player sinks:{_game.PlayerShots.Count(s => s.Result == ShotResultEnum.Sink)}");
             Console.WriteLine();
