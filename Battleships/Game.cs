@@ -17,6 +17,9 @@ namespace Battleships
         {
             PlayerShips = GenerateShips(2, 1);
             NPCShips = GenerateShips(2, 1);
+
+            PlayerShots = new List<Shot>();
+            NPCShots = new List<Shot>();
         }
 
         /// <summary>
@@ -85,12 +88,12 @@ namespace Battleships
                 throw new ArgumentException("Ship is too long to fit in the grid.");
             }
 
-            Random rand = new Random();
-
-            int startCol = rand.Next(0, 10);
-            int startRow = rand.Next(0, 10);
+            Square startingSquare = GetRandomSquare();
+            int startCol = startingSquare.Col;
+            int startRow = startingSquare.Row;
 
             // Pick direction randomly
+            Random rand = new Random();
             int direction = rand.Next(0, 10);
 
             Ship ship = new Ship(name);
@@ -118,12 +121,59 @@ namespace Battleships
         /// <summary>
         /// Shoots given target
         /// </summary>
-        /// <param name="target">Target square</param>
+        /// <param name="targetSquare">Target square</param>
         /// <param name="player">Player flag: true - player; false - npc</param>
         /// <returns></returns>
-        public Shot Shoot(Square target, bool player)
+        public Shot Shoot(Square? targetSquare, bool player)
         {
-            throw new NotImplementedException();
+            Ship[] targetShips;
+            List<Shot> shotsCollection;
+
+            targetShips = player ? this.PlayerShips : this.NPCShips;
+            shotsCollection = player ? this.PlayerShots : this.NPCShots;
+
+            if (!targetSquare.HasValue)
+            {
+                var alreadyShotSquares = shotsCollection.Select(s => s.Square);
+
+                Square randomSquare = GetRandomSquare();
+                while (alreadyShotSquares.Contains(randomSquare))
+                {
+                    randomSquare = GetRandomSquare();
+                }
+                targetSquare = randomSquare;
+            }
+
+            ShotResultEnum shotResult = ShotResultEnum.Miss;
+            foreach (var ship in targetShips)
+            {
+                if (ship.HealthySquares.Contains(targetSquare.Value))
+                {
+                    ship.Destroy(targetSquare.Value);
+                    shotResult = ship.Destroyed ? ShotResultEnum.Sink : ShotResultEnum.Hit;
+                    break;
+                }
+            }
+
+            var shot = new Shot(targetSquare.Value, shotResult);
+
+            shotsCollection.Add(shot);
+
+            return shot;
+        }
+
+        /// <summary>
+        /// Gets random sqare within 0-10 range
+        /// </summary>
+        /// <returns></returns>
+        public Square GetRandomSquare()
+        {
+            Random rand = new Random();
+
+            int col = rand.Next(0, 10);
+            int row = rand.Next(0, 10);
+
+            return new Square(col, row);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Battleships
@@ -19,5 +20,15 @@ namespace Battleships
 
         public bool Destroyed => HealthySquares.Count == 0;
         public int Length => HealthySquares.Count + SinkedSquares.Count;
+
+        public void Destroy(Square square)
+        {
+            var hit = HealthySquares.Remove(square);
+
+            if (hit)
+            {
+                SinkedSquares.Add(square);
+            }
+        }
     }
 }
