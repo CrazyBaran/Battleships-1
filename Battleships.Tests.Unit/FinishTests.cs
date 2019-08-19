@@ -84,5 +84,83 @@ namespace Tests
 
             Assert.IsTrue(game.IsFinished);
         }
+
+        [Test]
+        public void DidPlayerWin_NPCLostAllShips_Yes()
+        {
+            Game game = new Game();
+
+            game.PlayerShips = new Ship[1];
+            game.PlayerShips[0] = new Ship("Dummy")
+            {
+                HealthySquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            game.NPCShips = new Ship[1];
+            game.NPCShips[0] = new Ship("Sinked")
+            {
+                SinkedSquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            Assert.IsTrue(game.DidPlayerWin);
+        }
+
+        [Test]
+        public void DidPlayerWin_PlayerLostShips_No()
+        {
+            Game game = new Game();
+
+            game.PlayerShips = new Ship[1];
+            game.PlayerShips[0] = new Ship("Dummy")
+            {
+                SinkedSquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            game.NPCShips = new Ship[1];
+            game.NPCShips[0] = new Ship("Sinked")
+            {
+                HealthySquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            Assert.IsFalse(game.DidPlayerWin);
+        }
+
+        [Test]
+        public void DidPlayerWin_ShipsNotSinked_No()
+        {
+            Game game = new Game();
+
+            game.PlayerShips = new Ship[1];
+            game.PlayerShips[0] = new Ship("Dummy")
+            {
+                HealthySquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            game.NPCShips = new Ship[1];
+            game.NPCShips[0] = new Ship("Dummy")
+            {
+                HealthySquares = new List<Square>
+                {
+                    new Square(1,1)
+                }
+            };
+
+            Assert.IsFalse(game.DidPlayerWin);
+        }
     }
 }
