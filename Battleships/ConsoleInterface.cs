@@ -18,21 +18,69 @@ namespace Battleships
 
         public void Start()
         {
+            Console.Clear();
+            PrintBoards();
             string input = String.Empty;
+            string playerMessage = String.Empty;
+            string enemyMessage = String.Empty;
             while (!string.Equals(input.ToUpper(), "EXIT"))
             {
                 if (_validator.ValidateCoordinates(input))
                 {
+                    var playerShot = _game.Shoot(new Square(input), true);
 
+                    playerMessage = $"You shot square {input} with a {playerShot.Result}!\n";
+
+                    var npcShot = _game.Shoot(null, false);
+                    enemyMessage = $"Your enemy shot square {npcShot.Square.ToString()} with a {npcShot.Result}!\n";
+
+                }
+                else if (!string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine($"\nPlease select valid column.");
                 }
 
                 Console.Clear();
                 PrintBoards();
+                PrintLegend();
+
+                Console.WriteLine();
+                Console.Write(playerMessage);
+                Console.Write(enemyMessage);
+
+                if (_game.IsFinished)
+                {
+                    break;
+                }
 
                 PrintMenu();
 
                 input = Console.ReadLine();
             }
+
+            if (string.Equals(input.ToUpper(), "EXIT"))
+            {
+                return;
+            }
+
+            Console.WriteLine("\nGame Finished!");
+            string finishMessage = _game.DidPlayerWin ? "Congratulations! You won!" : "Computer won! Good luck next time!";
+            Console.WriteLine(finishMessage);
+            Console.WriteLine($"Player hits:{_game.PlayerShots.Count(s => s.Result == ShotResultEnum.Hit)}");
+            Console.WriteLine($"Player sinks:{_game.PlayerShots.Count(s => s.Result == ShotResultEnum.Sink)}");
+            Console.WriteLine();
+            Console.WriteLine($"Computer hits:{_game.NPCShots.Count(s => s.Result == ShotResultEnum.Hit)}");
+            Console.WriteLine($"Computer sinks:{_game.NPCShots.Count(s => s.Result == ShotResultEnum.Sink)}");
+
+
+        }
+
+        private void PrintLegend()
+        {
+            Console.WriteLine("\nLegend:");
+            Console.WriteLine("■ - Ship square");
+            Console.WriteLine("X - Hit Ship square");
+            Console.WriteLine("o - Missed shot");
         }
 
         private void PrintMenu()
@@ -48,8 +96,8 @@ namespace Battleships
             string e = "   ";
 
             char healthySquare = '■';
-            char hitSquare = '□';
-            char miss = '○';
+            char hitSquare = 'X';
+            char miss = 'o';
 
             string playerBoard = $"{e}|{e + e + e + e}Player Board{e + e + e + e + e}|";
             string enemyBoard = $"{e}|{e + e + e + e}Enemy Board {e + e + e + e + e}|";
@@ -95,7 +143,7 @@ namespace Battleships
                     mark = ' ';
                     if (enemyHealthySquares.Contains(square))
                     {
-                        mark = healthySquare;
+                        mark = 's';
                     }
                     else if (enemySinkedSquares.Contains(square))
                     {
