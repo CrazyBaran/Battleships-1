@@ -6,15 +6,15 @@ namespace Battleships
 {
     public class Ship
     {
-        public List<int[]> HealthySquares;
+        public List<Square> HealthySquares;
         public string Type;
-        public List<int[]> SinkedSquares;
+        public List<Square> SinkedSquares;
 
         public Ship(string type)
         {
             this.Type = type;
-            this.HealthySquares = new List<int[]>();
-            this.SinkedSquares = new List<int[]>();
+            this.HealthySquares = new List<Square>();
+            this.SinkedSquares = new List<Square>();
         }
 
         public bool Destroyed => HealthySquares.Count == 0;

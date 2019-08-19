@@ -63,8 +63,8 @@ namespace Battleships
         {
             var occupiedSquares = ships.SelectMany(s => s.HealthySquares);
 
-            bool outOfGrid = ship.HealthySquares.Any(p => p[0] > 9 || p[1] > 9);
-            bool collidesWithOtherShips = occupiedSquares.Intersect(ship.HealthySquares).Count() > 0;
+            bool outOfGrid = ship.HealthySquares.Any(p => p.Col > 9 || p.Row > 9 || p.Col < 0 || p.Row < 0);
+            bool collidesWithOtherShips = occupiedSquares.Intersect(ship.HealthySquares).Any();
 
             return outOfGrid || collidesWithOtherShips;
         }
@@ -84,8 +84,8 @@ namespace Battleships
 
             Random rand = new Random();
 
-            int startX = rand.Next(0, 10);
-            int startY = rand.Next(0, 10);
+            int startCol = rand.Next(0, 10);
+            int startRow = rand.Next(0, 10);
 
             // Pick direction randomly
             int direction = rand.Next(0, 10);
@@ -97,7 +97,7 @@ namespace Battleships
                 // horizontal
                 for (int i = 0; i < length; i++)
                 {
-                    ship.HealthySquares.Add(new int[] { startX + i, startY });
+                    ship.HealthySquares.Add(new Square(startCol + i, startRow));
                 }
             }
             else
@@ -105,7 +105,7 @@ namespace Battleships
                 // vertical
                 for (int i = 0; i < length; i++)
                 {
-                    ship.HealthySquares.Add(new int[] { startX, startY + i });
+                    ship.HealthySquares.Add(new Square(startCol, startRow + i));
                 }
             }
 
