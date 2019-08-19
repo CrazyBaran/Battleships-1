@@ -6,5 +6,8 @@ namespace Battleships
 {
     public enum ShotResultEnum
     {
+        Hit = 1,
+        Sink = 2,
+        Miss = 3
     }
 }

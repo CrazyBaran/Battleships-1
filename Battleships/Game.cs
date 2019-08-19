@@ -10,6 +10,9 @@ namespace Battleships
         public Ship[] PlayerShips { get; set; }
         public Ship[] NPCShips { get; set; }
 
+        public List<Shot> PlayerShots { get; set; }
+        public List<Shot> NPCShots { get; set; }
+
         public Game()
         {
             PlayerShips = GenerateShips(2, 1);
@@ -110,6 +113,17 @@ namespace Battleships
             }
 
             return ship;
+        }
+
+        /// <summary>
+        /// Shoots given target
+        /// </summary>
+        /// <param name="target">Target square</param>
+        /// <param name="player">Player flag: true - player; false - npc</param>
+        /// <returns></returns>
+        public Shot Shoot(Square target, bool player)
+        {
+            throw new NotImplementedException();
         }
     }
 }
