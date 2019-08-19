@@ -7,11 +7,10 @@ namespace Battleships
         static void Main(string[] args)
         {
             var game = new Game();
-            var ui = new ConsoleInterface(game);
+            var validator = new Validator();
+            var ui = new ConsoleInterface(game, validator);
 
             ui.Start();
-
-            Console.ReadKey();
         }
     }
 }
