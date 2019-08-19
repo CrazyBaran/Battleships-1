@@ -47,27 +47,27 @@ namespace Tests
         }
 
         [Test]
-        public void Game_OnInit_AllBattleshipsAre4Squares()
+        public void Game_OnInit_AllBattleshipsAre5Squares()
         {
             Game game = new Game();
 
             var playerBattleships = game.PlayerShips.Where(s => string.Equals(s.Type, "Battleship")).Select(bs => bs.Length);
             var npcBattleships = game.NPCShips.Where(s => string.Equals(s.Type, "Battleship")).Select(bs => bs.Length);
 
-            var invalidShips = playerBattleships.Count(l => l != 4) + npcBattleships.Count(l => l != 4);
+            var invalidShips = playerBattleships.Count(l => l != 5) + npcBattleships.Count(l => l != 5);
 
             Assert.AreEqual(0, invalidShips);
         }
 
         [Test]
-        public void Game_OnInit_AllDestroyersAre5Squares()
+        public void Game_OnInit_AllDestroyersAre4Squares()
         {
             Game game = new Game();
 
             var playerBattleships = game.PlayerShips.Where(s => string.Equals(s.Type, "Destroyer")).Select(bs => bs.Length);
             var npcBattleships = game.NPCShips.Where(s => string.Equals(s.Type, "Destroyer")).Select(bs => bs.Length);
 
-            var invalidShips = playerBattleships.Count(l => l != 5) + npcBattleships.Count(l => l != 5);
+            var invalidShips = playerBattleships.Count(l => l != 4) + npcBattleships.Count(l => l != 4);
 
             Assert.AreEqual(0, invalidShips);
         }
