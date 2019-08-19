@@ -42,7 +42,7 @@ namespace Tests
                 }
             };
 
-            var shot = game.Shoot(new Square(1, 2), true);
+            var shot = game.Shoot(new Square(1, 2), false);
 
             Assert.Contains(shot, game.NPCShots);
         }
