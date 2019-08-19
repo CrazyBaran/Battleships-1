@@ -39,5 +39,11 @@ namespace Battleships
         {
             return this.Col == other.Col && this.Row == other.Row;
         }
+
+        public override string ToString()
+        {
+            var cols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return cols[Col] + Row.ToString();
+        }
     }
 }
