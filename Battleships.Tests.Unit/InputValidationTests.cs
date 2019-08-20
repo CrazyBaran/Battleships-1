@@ -52,7 +52,7 @@ namespace Tests
         {
             Validator validator = new Validator();
 
-            bool valid = validator.ValidateCoordinates("j11");
+            bool valid = validator.ValidateCoordinates("j20");
 
             Assert.IsFalse(valid);
         }
@@ -62,7 +62,7 @@ namespace Tests
         {
             Validator validator = new Validator();
 
-            bool valid = validator.ValidateCoordinates("K11");
+            bool valid = validator.ValidateCoordinates("K20");
 
             Assert.IsFalse(valid);
         }
