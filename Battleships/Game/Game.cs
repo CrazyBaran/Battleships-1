@@ -138,9 +138,10 @@ namespace Battleships
             if (!targetSquare.HasValue)
             {
                 var alreadyShotSquares = shotsCollection.Select(s => s.Square);
+                int shotsCount = alreadyShotSquares.Count();
 
                 Square randomSquare = GetRandomSquare();
-                while (alreadyShotSquares.Count() < 100 && alreadyShotSquares.Contains(randomSquare))
+                while (shotsCount < 100 && alreadyShotSquares.Contains(randomSquare))
                 {
                     randomSquare = GetRandomSquare();
                 }
