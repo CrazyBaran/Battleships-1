@@ -21,32 +21,38 @@ namespace Battleships
             Console.Clear();
             PrintBoards();
             string input = String.Empty;
-            string playerMessage = String.Empty;
-            string enemyMessage = String.Empty;
+            string playerMessage;
+            string enemyMessage;
+            string errorMessage;
+
             while (!string.Equals(input.ToUpper(), "EXIT"))
             {
+                playerMessage = String.Empty;
+                enemyMessage = String.Empty;
+                errorMessage = String.Empty;
+
                 if (_validator.ValidateCoordinates(input))
                 {
                     var playerShot = _game.Shoot(new Square(input), true);
 
-                    playerMessage = $"You shot square {input} with a {playerShot.Result}!\n";
+                    playerMessage = $"You shot square {input} with a {playerShot.Result}!";
 
                     var npcShot = _game.Shoot(null, false);
-                    enemyMessage = $"Your enemy shot square {npcShot.Square.ToString()} with a {npcShot.Result}!\n";
+                    enemyMessage = $"Your enemy shot square {npcShot.Square.ToString()} with a {npcShot.Result}!";
 
                 }
                 else if (!string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine($"\nPlease select valid column.");
+                    errorMessage = "Please select valid column.";
                 }
 
                 Console.Clear();
                 PrintBoards();
                 PrintLegend();
 
-                Console.WriteLine();
-                Console.Write(playerMessage);
-                Console.Write(enemyMessage);
+                PrintMessage(playerMessage.Length > 0 ? playerMessage + Environment.NewLine + enemyMessage : string.Empty);
+                PrintMessage(errorMessage);
+
 
                 if (_game.IsFinished)
                 {
@@ -76,9 +82,21 @@ namespace Battleships
 
         }
 
+        private void PrintMessage(string message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                Console.WriteLine();
+                Console.WriteLine(message);
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.WriteLine();
+            }
+        }
+
         private void PrintLegend()
         {
-            Console.WriteLine("\nLegend:");
             Console.WriteLine("■ - Ship square");
             Console.WriteLine("X - Hit Ship square");
             Console.WriteLine("o - Missed shot");
@@ -86,9 +104,9 @@ namespace Battleships
 
         private void PrintMenu()
         {
-            Console.WriteLine("\nYour turn!\n");
-            Console.WriteLine("To shoot enter column and row (in the form of A0) and press enter!");
-            Console.WriteLine("To exit the game enter \"exit\" and press enter.\n");
+            Console.WriteLine("Enter coordinate to shoot (in the form of A0)");
+            Console.WriteLine("Enter \"exit\" to exit the game\n");
+            Console.Write("Your move:");
         }
 
         private void PrintBoards()
