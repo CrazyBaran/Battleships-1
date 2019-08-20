@@ -162,7 +162,7 @@ namespace Battleships
                     mark = ' ';
                     if (enemyHealthySquares.Contains(square))
                     {
-                        mark = 's';
+                        mark = ' ';
                     }
                     else if (enemySinkedSquares.Contains(square))
                     {
