@@ -9,7 +9,7 @@ namespace Battleships
     {
         public bool ValidateCoordinates(string input)
         {
-            Regex rgx = new Regex("^[a-jA-J][0-9][0]*$");
+            Regex rgx = new Regex("^([a-jA-J])([0-9]|10)$");
 
             return rgx.IsMatch(input);
         }
