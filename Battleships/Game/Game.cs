@@ -127,20 +127,20 @@ namespace Battleships
         /// <param name="targetSquare">Target square</param>
         /// <param name="player">Is player shooting?</param>
         /// <returns></returns>
-        public Shot Shoot(Square? targetSquare, bool player)
+        public Shot Shoot(Square? targetSquare, bool isPlayerShooting)
         {
             Ship[] targetShips;
             List<Shot> shotsCollection;
 
-            targetShips = player ? this.NPCShips : this.PlayerShips;
-            shotsCollection = player ? this.PlayerShots : this.NPCShots;
+            targetShips = isPlayerShooting ? this.NPCShips : this.PlayerShips;
+            shotsCollection = isPlayerShooting ? this.PlayerShots : this.NPCShots;
 
             if (!targetSquare.HasValue)
             {
                 var alreadyShotSquares = shotsCollection.Select(s => s.Square);
 
                 Square randomSquare = GetRandomSquare();
-                while (alreadyShotSquares.Contains(randomSquare))
+                while (alreadyShotSquares.Count() < 100 && alreadyShotSquares.Contains(randomSquare))
                 {
                     randomSquare = GetRandomSquare();
                 }

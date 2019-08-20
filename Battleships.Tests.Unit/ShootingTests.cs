@@ -154,5 +154,46 @@ namespace Tests
 
             Assert.AreEqual(1, sinkedShips);
         }
+
+        [Test]
+        public void Shoot_AllSquaresShot_ShotsAnyway()
+        {
+            Game game = new Game();
+
+            game.NPCShots = new List<Shot>();
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    game.NPCShots.Add(new Shot(new Square(j, i), ShotResultEnum.Miss));
+                }
+            }
+
+            var shot = game.Shoot(null, false);
+
+            Assert.IsNotNull(shot);
+        }
+
+        [Test]
+        public void Shoot_OneSquareLeft_ShotsIt()
+        {
+            Game game = new Game();
+
+            game.NPCShots = new List<Shot>();
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    game.NPCShots.Add(new Shot(new Square(j, i), ShotResultEnum.Miss));
+                }
+            }
+
+            var lastSquare = new Square(9, 9);
+            game.NPCShots = game.NPCShots.Where(s => !lastSquare.Equals(s.Square)).ToList();
+
+            var shot = game.Shoot(null, false);
+
+            Assert.AreEqual(lastSquare, shot.Square);
+        }
     }
 }
