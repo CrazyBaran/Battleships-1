@@ -11,6 +11,9 @@ namespace Battleships
             var ui = new ConsoleInterface(game, validator);
 
             ui.Start();
+
+            Console.WriteLine("Press any key to close...");
+            Console.ReadKey();
         }
     }
 }
